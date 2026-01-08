@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Vercel / Vite environment variable (REQUIRED in production)
+// Backend root URL (NO /api here)
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 if (!API_BASE_URL) {
@@ -9,9 +9,9 @@ if (!API_BASE_URL) {
   );
 }
 
-// Create axios instance
+// Axios instance
 const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${API_BASE_URL}/api/auth/`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -62,10 +62,10 @@ apiClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${access}`;
 
         return apiClient(originalRequest);
-      } catch (refreshError) {
+      } catch {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
-        return Promise.reject(refreshError);
+        return Promise.reject(error);
       }
     }
 
