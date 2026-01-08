@@ -3,26 +3,42 @@ from django.contrib.auth import authenticate
 from .models import User
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    # Accept frontend field names
+    phone = serializers.CharField(write_only=True, required=False)
     password = serializers.CharField(write_only=True, min_length=8)
-    password_confirm = serializers.CharField(write_only=True)
+    confirmPassword = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'phone_number', 'password', 'password_confirm')
+        fields = (
+            'email',
+            'name',
+            'phone',
+            'password',
+            'confirmPassword',
+        )
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
+        if attrs['password'] != attrs['confirmPassword']:
             raise serializers.ValidationError("Passwords don't match")
         return attrs
 
     def create(self, validated_data):
-        validated_data.pop('password_confirm')
+        # Map frontend field -> model field
+        phone = validated_data.pop('phone', None)
+        validated_data.pop('confirmPassword')
         password = validated_data.pop('password')
 
-        user = User(**validated_data)   # create instance without saving yet
-        user.set_password(password)     # hash the password
+        user = User(**validated_data)
+
+        if phone:
+            user.phone_number = phone
+
+        user.set_password(password)
         user.save()
         return user
+
+
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
@@ -41,6 +57,7 @@ class UserLoginSerializer(serializers.Serializer):
         else:
             raise serializers.ValidationError('Must include email and password')
         return attrs
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
