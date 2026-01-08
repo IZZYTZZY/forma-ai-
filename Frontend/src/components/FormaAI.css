@@ -1,0 +1,378 @@
+/* FormaAI Container */
+.forma-ai {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #1a1a1a;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  overflow: hidden;
+}
+
+/* Dashboard Layout */
+.dashboard-layout {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* AI Content Area */
+.ai-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 2rem;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+
+/* AI Header */
+.ai-header {
+  margin-bottom: 2rem;
+  flex-shrink: 0;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 2px solid #2A5766;
+  color: #cccccc;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+  font-size: 0.875rem;
+  border-radius: 8px;
+}
+
+.back-button:hover {
+  color: #ffffff;
+  background: #2A5766;
+  border-color: #2A5766;
+}
+
+.ai-title-section {
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ai-main-title {
+  font-size: 2.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+
+.ai-subtitle {
+  font-size: 1rem;
+  color: #666666;
+  margin: 0;
+}
+
+/* Chat Container */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+  min-height: 0; /* allow messages to shrink and scroll */
+}
+
+.chat-messages {
+  flex: 1 1 auto;
+  overflow-y: auto; /* only messages scroll */
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.chat-message-item {
+  text-align: left;
+  background: #232323;
+  color: #e6e6e6;
+  border: 1px solid #333;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.template-error-banner {
+  background: #432222;
+  color: #ffb3b3;
+  border: 1px solid #803333;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0 0 10px;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Chat Input – anchored at bottom of container */
+.chat-input-container {
+  flex-shrink: 0;
+  background: #1a1a1a;
+  padding: 1rem 0;
+}
+
+/* Control panel removed */
+
+.chat-input-wrapper {
+  background: #2a2a2a;
+  border-radius: 12px;
+  border: 2px solid #2A5766;
+  overflow: hidden;
+  max-height: 240px; /* cap height */
+  display: flex;
+  flex-direction: column;
+  position: relative; /* anchor controls inside */
+}
+
+.chat-input-box {
+  padding: 0.75rem;
+  overflow-y: auto; /* scrollbar when needed */
+  padding-right: 180px; /* space for fixed controls */
+  padding-bottom: 64px; /* space below for controls */
+}
+
+.chat-input {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  resize: none;
+  outline: none;
+  min-height: 24px;
+  font-family: inherit;
+  margin-bottom: 0.75rem;
+  overflow-y: auto; /* ensure scrollbar appears inside */
+}
+
+.attached-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid #333333;
+}
+
+.attached-file {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3a3a3a;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #cccccc;
+}
+
+.file-name {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-file-btn {
+  background: none;
+  border: none;
+  color: #999999;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.remove-file-btn:hover {
+  color: #ffffff;
+}
+
+/* duplicate rules removed to preserve reserved padding and textarea scroll */
+
+.chat-input::placeholder {
+  color: #666666;
+}
+
+.chat-controls {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.left-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.file-upload-btn {
+  background: none;
+  border: none;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: color 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.file-upload-btn:hover {
+  color: #ffffff;
+  background: #3a3a3a;
+}
+
+.pdf-btn {
+  background-color: #3a3a3e;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+  position: relative;
+}
+
+.pdf-btn:hover {
+  background-color: #4a4a4e;
+  color: #fff;
+}
+
+.image-indicator {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.send-btn {
+  background: #2A5766;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: #346073;
+  transform: translateY(-1px);
+}
+
+/* PDF Generation Overlay */
+.pdf-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pdf-overlay-content {
+  background: #2a2a2a;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #2A5766;
+  text-align: center;
+  min-width: 200px;
+}
+
+.pdf-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #333;
+  border-top: 4px solid #2A5766;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pdf-overlay-content p {
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.cancel-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #ff4444;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: #cc3333;
+}
+
+/* Template selection highlight animation */
+.pdf-btn.highlight-error {
+  animation: highlight-error 2s ease-in-out;
+}
+
+@keyframes highlight-error {
+  0% { border-color: #ff4444; background-color: #ff4444; }
+  50% { border-color: #ff4444; background-color: #ff4444; }
+  100% { border-color: #555; background-color: #3a3a3e; }
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
