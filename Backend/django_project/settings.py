@@ -19,11 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -----------------------------
 # Core Config
 # -----------------------------
-SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-me")
-DEBUG = os.getenv("DEBUG", "true").lower() == "true"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", os.getenv("SECRET_KEY", "dev-secret-key-change-me"))
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
-# IMPORTANT: Render does NOT read .env unless added in dashboard
-# Make sure ALLOWED_HOSTS is set in Render environment settings
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
     "localhost,127.0.0.1,django-msvx.onrender.com,django-six-gamma.vercel.app"
@@ -59,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # REQUIRED FOR RENDER
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,8 +93,6 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # -----------------------------
 # Database
 # -----------------------------
-# Defaults to SQLite for local development. If Postgres env vars are present,
-# configures Postgres (compatible with Supabase).
 POSTGRES_DB = os.getenv("POSTGRES_DB")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
@@ -120,8 +117,6 @@ if all([POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST]):
         }
     }
 elif DATABASE_URL and DATABASE_URL.startswith(('postgres://', 'postgresql://')):
-    # Minimal parser for DATABASE_URL if provided
-    # Example: postgresql://user:pass@host:5432/dbname?sslmode=require
     try:
         from urllib.parse import urlparse, parse_qs
         parsed = urlparse(DATABASE_URL)
@@ -176,8 +171,9 @@ USE_TZ = True
 # -----------------------------
 # Static & Media
 # -----------------------------
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -227,7 +223,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_URLS_REGEX = r'^/api/.*$'
 
-# Temporary safety net to guarantee CORS headers during stabilization
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_HEADERS = [
