@@ -22,10 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", os.getenv("SECRET_KEY", "dev-secret-key-change-me"))
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1,django-msvx.onrender.com,django-six-gamma.vercel.app"
-).split(",")
+# 🔧 FIXED: allow all hosts (required for Render + Vercel)
+ALLOWED_HOSTS = ["*"]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -57,7 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # REQUIRED FOR RENDER
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -214,16 +212,8 @@ SIMPLE_JWT = {
 # CORS + CSRF
 # -----------------------------
 CORS_ALLOW_CREDENTIALS = False
-
-CORS_ALLOWED_ORIGINS = [
-    "https://django-six-gamma.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
-CORS_URLS_REGEX = r'^/api/.*$'
-
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 CORS_ALLOW_HEADERS = [
     "accept",
